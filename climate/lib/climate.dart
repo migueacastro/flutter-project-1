@@ -1,30 +1,33 @@
+import 'dart:math';
 
-String selectLocation() {
+
+
+List<String> weathers = ["Clear", "Rainy", "Cloudy", "Sunny"];
+List<String> locations = ["Los Sauces", "Azerbaiyán", "Maracaibo"];
+
+int selectLocation() {
   Random r = Random();
   return r.nextInt(locations.length);
 }
 
-String selectWeather() {
+int selectWeather() {
   Random r = Random();
   return r.nextInt(weathers.length);
 }
 
-String selectTemperature() {
+num selectTemperature() {
   Random r = Random();
   num minTemperature = -89.2; // Earth's coldest temperature
   num maxTemperature = 56.7; // Earth's hotest temperature (San Carlos)
-  return r.nextDouble(minTemperature, maxTemperature + 1)
+  return minTemperature + (r.nextDouble() * (maxTemperature + 1 - minTemperature));
 }
 
-Stream<Map<String, dynamic>> getRandomClimateInfo () async* {
-  while (true) {
-    var climateInfo = new Map();
-    climateInfo['location'] = selectLocation();
-    climateInfo['weather'] = selectWeather();
-    climateInfo['temperature'] = selectTemperature();
-
-    
-    await Future.delayed(Duration(seconds:5));
-    yield(climateInfo);
-  }
+num celciusToFahrenheit(num grad) {
+  return (grad * 9/5) + 32;
 }
+
+num celciusToKelvin(num grad) {
+  return grad + 273;
+}
+
+
